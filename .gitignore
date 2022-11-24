@@ -1,0 +1,8 @@
+/*.exe
+**/__pycache__
+/data
+/out
+/venv
+/.idea
+/.gitignore.bak
+/secrets.txt
