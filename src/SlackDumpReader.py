@@ -64,7 +64,7 @@ class SlackDumpReader:
         )
 
     def read_replies(self, message: dict) -> list[SlackThreadMessage]:
-        replies: list[[SlackThreadMessage]] = list()
+        replies: list[SlackThreadMessage] = list()
         if "slackdump_thread_replies" in message:
             for reply in message["slackdump_thread_replies"]:
                 if (
