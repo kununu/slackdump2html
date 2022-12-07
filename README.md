@@ -58,15 +58,15 @@ You'll need to dump the channel you want to convert via slackdump.
 Use the data/channels.txt file to get the ID of your channel (e.g. C03HQM5DE) and use slackdump to dump the channel to a json.
 Grab a coffee, this might take a while.
 ```
-./slackdump <your-channel-id>
+./slackdump -download <your-channel-id>
 Example:
-./slackdump C03HQM5DS
+./slackdump C03HQM5DE
 ```
 
 Convert your slackdump to a html file with this command.
 ```
 py slackdump2html.py <path-to-your-export-file>
 Example:
-py slackdump2html.py C03HQM5DS.json
+py slackdump2html.py C03HQM5DE.json
 ```
 You'll find your output file in out/<channel-name>.html.

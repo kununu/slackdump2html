@@ -21,6 +21,7 @@ class HtmlPrinter:
         html1 = "<!DOCTYPE html>\n"
         html1 += "    <head>\n"
         html1 += "        <title>#" + self.slack_data.channel_name + " chat history</title>\n"
+        html1 += "        <meta charset=\"UTF-8\">"
         html1 += self.read_css_file()
         html3 = "    </head>\n"
         html3 += "    <body>\n"
@@ -163,7 +164,10 @@ class HtmlPrinter:
         if len(reactions) > 0:
             html += '            <ul class="reactions">\n'
             for reaction in reactions.items():
-                html += '                <li title="' + reaction[0] + '">' + self.get_custom_emoji_html(reaction[0]) + ' ' + str(reaction[1]) + '</li>\n'
+                emoji_name = self.get_custom_emoji_html(reaction[0])
+                if emoji_name.startswith(":"):
+                    print("Couldn't translate emoji " + emoji_name)
+                html += '                <li title="' + reaction[0] + '">' + emoji_name + ' ' + str(reaction[1]) + '</li>\n'
             html += '            </ul>\n'
         return html
 
