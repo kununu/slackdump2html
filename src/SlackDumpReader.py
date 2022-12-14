@@ -3,13 +3,13 @@ import json
 import os
 from datetime import datetime
 
-from src.SlackDataCleaner import SlackDataCleaner
 from src.data_structures import SlackData, SlackMessage, SlackThreadMessage
 
 
-class SlackDumpReader:
-    data_cleaner = SlackDataCleaner()
+EMOJI_PATH = "data/emojis/emojis/"
 
+
+class SlackDumpReader:
     def read(self, file_path: str) -> SlackData:
         dump_file = open(file_path, encoding='utf-8')
         dump_data = json.load(dump_file)
@@ -53,7 +53,7 @@ class SlackDumpReader:
                 and str(message["blocks"][0]["image_url"]).__contains__("giphy.com"))
 
     def read_replies(self, message: dict) -> list[SlackThreadMessage]:
-        replies: list[[SlackThreadMessage]] = list()
+        replies: list[SlackThreadMessage] = list()
         if "slackdump_thread_replies" in message:
             for reply in message["slackdump_thread_replies"]:
                 if reply["type"] == "message" and "subtype" not in reply and "text" in reply:
@@ -92,14 +92,14 @@ class SlackDumpReader:
         return emojis
 
     def get_emoji_file_name(self, emoji_name: str) -> str:
-        if os.path.exists("data/emojis/emojis/" + emoji_name + ".gif"):
-            return "data/emojis/emojis/" + emoji_name + ".gif"
-        elif os.path.exists("data/emojis/emojis/" + emoji_name + ".jpeg"):
-            return "data/emojis/emojis/" + emoji_name + ".jpeg"
-        elif os.path.exists("data/emojis/emojis/" + emoji_name + ".jpg"):
-            return "data/emojis/emojis/" + emoji_name + ".jpg"
-        elif os.path.exists("data/emojis/emojis/" + emoji_name + ".png"):
-            return "data/emojis/emojis/" + emoji_name + ".png"
+        if os.path.exists(EMOJI_PATH + emoji_name + ".gif"):
+            return EMOJI_PATH + emoji_name + ".gif"
+        elif os.path.exists(EMOJI_PATH + emoji_name + ".jpeg"):
+            return EMOJI_PATH + emoji_name + ".jpeg"
+        elif os.path.exists(EMOJI_PATH + emoji_name + ".jpg"):
+            return EMOJI_PATH + emoji_name + ".jpg"
+        elif os.path.exists(EMOJI_PATH + emoji_name + ".png"):
+            return EMOJI_PATH + emoji_name + ".png"
         else:
             return "<none>" + emoji_name
 

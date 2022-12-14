@@ -195,7 +195,7 @@ class SlackDataCleaner:
 
     def replace_emoji_name(self, emoji_name: str):
         for skin_tone in self.emoji_skin_tones.items():
-            emoji_name = emoji_name.replace("::skin-tone-" + str(skin_tone[0]), skin_tone[1])
+            emoji_name = emoji_name.replace(f"::skin-tone-{skin_tone[0]}", skin_tone[1])
         for emoji in self.emoji_name_start_slack_to_lib.items():
             if emoji_name.startswith(emoji[0]):
                 emoji_name = emoji_name.replace(emoji[0], emoji[1])
