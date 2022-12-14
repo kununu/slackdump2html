@@ -21,7 +21,7 @@ class HtmlPrinter:
         html1 = "<!DOCTYPE html>\n"
         html1 += "    <head>\n"
         html1 += f"        <title>#{self.slack_data.channel_name} chat history</title>\n"
-        html1 += "        <meta charset=\"UTF-8\">"
+        html1 += '        <meta charset="UTF-8">'
         html1 += self.read_css_file()
         html3 = "    </head>\n"
         html3 += "    <body>\n"
@@ -40,7 +40,7 @@ class HtmlPrinter:
         html = '        <style type="text/css">\n'
         with open("src/style/style.css") as file:
             html += file.read()
-        html += '        </style>\n'
+        html += "        </style>\n"
         return html
 
     def print_messages(self, messages: list[SlackMessage]) -> str:
@@ -69,11 +69,11 @@ class HtmlPrinter:
         html += '            <p class="meta">\n'
         html += f'                <span class="author">{message.user}</span>\n'
         html += f'                <span class="date">{self.to_time(message.date)}</span>\n'
-        html += '            </p>\n'
+        html += "            </p>\n"
         html += f'            <p class="message">{self.format_message(message.text)}</p>\n'
         html += self.print_reactions(message.reactions)
         html += self.print_replies(message)
-        html += '        </div>\n'
+        html += "        </div>\n"
         return html
 
     def print_user_image(self, user: str) -> str:
@@ -103,7 +103,7 @@ class HtmlPrinter:
         text = re.sub(r":([\w+-]+?)::skin-tone-(\d):", self.replace_emoji_with_skin_tone, text)
         text = re.sub(r":([\w+-]+?):", self.replace_emoji, text)
         text = re.sub(r"```(.*)```", self.make_code, text, flags=re.DOTALL)
-        text = emoji.emojize(text, language='alias')
+        text = emoji.emojize(text, language="alias")
         # TODO Emoji codes in links are translated to emojis which breaks these links
         return text
 
@@ -117,7 +117,7 @@ class HtmlPrinter:
 
     def create_html_img(self, match_obj):
         if match_obj.group(1) is not None:
-            return f'<{match_obj.group(1)}>'
+            return f"<{match_obj.group(1)}>"
 
     def create_at_tag(self, match_obj):
         if match_obj.group(1) is not None:
@@ -132,14 +132,14 @@ class HtmlPrinter:
 
     def make_bold(self, match_obj):
         if match_obj.group(1) is not None:
-            return f'<b>{match_obj.group(1)}</b>'
+            return f"<b>{match_obj.group(1)}</b>"
 
     def make_code(self, match_obj):
         if match_obj.group(1) is not None:
             code = match_obj.group(1)
-            code = code.replace("<", '&lt;')
-            code = code.replace(">", '&gt;')
-            return f'<code>{code}</code>'
+            code = code.replace("<", "&lt;")
+            code = code.replace(">", "&gt;")
+            return f"<code>{code}</code>"
 
     def replace_emoji(self, match_obj):
         emoji_name = match_obj.group(1)
@@ -162,7 +162,7 @@ class HtmlPrinter:
                 if emoji_name.startswith(":"):
                     print(f"Couldn't translate emoji {emoji_name}")
                 html += f'                <li title="{reaction[0]}">{emoji_name} {reaction[1]}</li>\n'
-            html += '            </ul>\n'
+            html += "            </ul>\n"
         return html
 
     def get_custom_emoji_html(self, emoji_name: str):
@@ -170,7 +170,7 @@ class HtmlPrinter:
             self.used_custom_emojis.add(emoji_name)
             return f'<i class="emoji emoji-{emoji_name}"></i>'
         else:
-            return emoji.emojize(f':{self.data_cleaner.replace_emoji_name(emoji_name)}:', language="alias")
+            return emoji.emojize(f":{self.data_cleaner.replace_emoji_name(emoji_name)}:", language="alias")
 
     def print_replies(self, message: SlackMessage) -> str:
         html = ""
@@ -179,7 +179,7 @@ class HtmlPrinter:
             html += f'               <p class="thread-meta">{len(message.replies)} answers </p>\n'
             for reply in message.replies:
                 html += self.print_reply(reply)
-            html += '		    </div>\n'
+            html += "		    </div>\n"
         return html
 
     def print_reply(self, reply: SlackThreadMessage) -> str:
@@ -188,19 +188,19 @@ class HtmlPrinter:
         html += '		            <p class="meta">\n'
         html += f'		                <span class="author">{reply.user}</span>\n'
         html += f'		                <span class="date">{self.to_datetime(reply.date)}</span>\n'
-        html += '		            </p>\n'
+        html += "		            </p>\n"
         html += f'		            <p class="message">{self.format_message(reply.text)}</p>\n'
         html += self.print_reactions(reply.reactions)
-        html += '		        </div>\n'
+        html += "		        </div>\n"
         return html
 
     def print_custom_emoji_definitions(self) -> str:
         html = '      <style type="text/css">\n'
         for emoji_name in self.used_custom_emojis:
-            html += f'        .emoji-{emoji_name} {{\n'
+            html += f"        .emoji-{emoji_name} {{\n"
             html += f'          background-image: url("data:{self.slack_data.emojis[emoji_name]}");'
-            html += '        }\n'
-        html += '      </style>\n'
+            html += "        }\n"
+        html += "      </style>\n"
         return html
 
     @staticmethod

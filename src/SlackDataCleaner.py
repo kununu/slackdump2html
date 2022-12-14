@@ -1,5 +1,3 @@
-import re
-
 from src.data_structures import SlackData
 
 
@@ -10,7 +8,7 @@ class SlackDataCleaner:
         3: "_medium-light_skin_tone",
         4: "_medium_skin_tone",
         5: "_medium-dark_skin_tone",
-        6: "_dark_skin_tone"
+        6: "_dark_skin_tone",
     }
     emoji_name_start_slack_to_lib = {
         "angel": "baby_angel",
@@ -44,9 +42,7 @@ class SlackDataCleaner:
         "snow_cloud": "cloud_with_snow",
         "spock-hand": "vulcan_salute",
         "sun_small_cloud": "sun_behind_small_cloud",
-
         # flags
-
         "flag-at": "Austria",
         "flag-england": "England",
         "flag-ch": "Switzerland",
@@ -64,9 +60,7 @@ class SlackDataCleaner:
         "flag-um": "United_States",
         "flag-us": "United_States",
         "flag-vc": "st_vincent_grenadines",
-
         # persons
-
         "female-": "woman_",
         "female_": "woman_",
         "male-": "man_",
@@ -94,17 +88,13 @@ class SlackDataCleaner:
         "woman_tipping-hand": "woman_tipping_hand",
         "man_with-bunny-ears-partying": "men_with_bunny_ears",
         "woman_with-bunny-ears-partying": "women_with_bunny_ears",
-
         "older_man": "old_man",
         "older_woman": "old_woman",
-
         "raising_hand": "man_raising_hand",
         "surfer": "person_surfing",
         "runner": "person_running",
         "water_polo": "person_playing_water_polo",
-
         # hands
-
         "-1": "thumbs_down",
         "+1": "thumbs_up",
         "clap_": "clapping_hands_",
@@ -123,9 +113,7 @@ class SlackDataCleaner:
         "thumbsup": "thumbs_up",
         "v_": "victory_hand_",
         "wave": "waving_hand",
-
         # families
-
         "man_man_girl-girl": "family_man_man_girl_girl",
         "man_man_girl-boy": "family_man_man_girl_boy",
         "man_man_boy-boy": "family_man_man_boy_boy",
@@ -151,9 +139,7 @@ class SlackDataCleaner:
         "woman_boy": "family_woman_boy",
         "man_girl": "family_man_girl",
         "woman_girl": "family_woman_girl",
-
         # medals
-
         "medal": "sports_medal",
         "first_place_medal": "1st_place_medal",
         "second_place_medal": "2nd_place_medal",
@@ -162,7 +148,7 @@ class SlackDataCleaner:
     }
 
     def __init__(self):
-        user_file = open("data/users.txt", "r", encoding='utf-8')
+        user_file = open("data/users.txt", "r", encoding="utf-8")
         lines = user_file.readlines()
         # Ignore the first 2 lines
         lines.pop(0)

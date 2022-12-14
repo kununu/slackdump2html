@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 emoji = "*"
+black = "*"
 
 [dev-packages]
 
