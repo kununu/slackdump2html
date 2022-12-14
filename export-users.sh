@@ -1,4 +1,4 @@
 #!/bin/bash
-rm data/users.txt -f
-mkdir data -p
+rm -f data/users.txt
+mkdir -p data
 ./slackdump -list-users > data/users.txt

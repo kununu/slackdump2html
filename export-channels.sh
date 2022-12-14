@@ -1,4 +1,4 @@
 #!/bin/bash
-rm data/channels.txt -f
-mkdir data -p
+rm -f data/channels.txt
+mkdir -p data
 ./slackdump -list-channels > data/channels.txt
