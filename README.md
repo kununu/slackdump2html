@@ -41,6 +41,9 @@ You'll also need an emoji dump
 
 In order to run this script, you need to have Python installed. If you don't have it, please [download](https://www.python.org/downloads/) the latest version.
 There are libraries needed. See the Pipfile for what's needed.
+```
+pipenv install
+```
 
 # Usage
 
