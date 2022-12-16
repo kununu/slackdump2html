@@ -58,7 +58,7 @@ You'll need to dump the channel you want to convert via slackdump.
 Use the data/channels.txt file to get the ID of your channel (e.g. C03HQM5DE) and use slackdump to dump the channel to a json.
 Grab a coffee, this might take a while.
 ```
-./slackdump -download <your-channel-id>
+./slackdump <your-channel-id>
 Example:
 ./slackdump C03HQM5DE
 ```
