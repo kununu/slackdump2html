@@ -60,13 +60,21 @@ Grab a coffee, this might take a while.
 ```
 ./slackdump <your-channel-id>
 Example:
-./slackdump C03HQM5DS
+./slackdump C03HQM5DE
 ```
 
 Convert your slackdump to a html file with this command.
 ```
-py slackdump2html.py <path-to-your-export-file>
+python slackdump2html.py <path-to-your-export-file>
 Example:
-py slackdump2html.py C03HQM5DS.json
+python slackdump2html.py C03HQM5DE.json
 ```
 You'll find your output file in out/<channel-name>.html.
+
+# Known issues
+* Emojis
+  * Thy python emoji package does not consider markup languages and replaces emojis in HTML links. This might break some of your links.
+  * Not all emojis can be replaced correctly.
+  * Not all image types are supported as custom emojis.
+* File attachments
+  * File attachments are not supported at all.

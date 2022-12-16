@@ -1,4 +1,4 @@
 #!/bin/bash
-rm data/emojis -f -r
-mkdir data/emojis -p
+rm -f -r data/emojis
+mkdir -p data/emojis
 ./slackdump -emoji -base data/emojis
