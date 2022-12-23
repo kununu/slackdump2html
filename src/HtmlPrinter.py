@@ -20,12 +20,14 @@ class HtmlPrinter:
     def print(self):
         html1 = "<!DOCTYPE html>\n"
         html1 += "    <head>\n"
-        html1 += f"        <title>#{self.slack_data.channel_name} chat history</title>\n"
+        html1 += (
+            f"        <title>{self.slack_data.channel_type.value}{self.slack_data.channel_name} chat history</title>\n"
+        )
         html1 += '        <meta charset="UTF-8">'
         html1 += self.read_css_file()
         html3 = "    </head>\n"
         html3 += "    <body>\n"
-        html3 += f"        <h1>#{self.slack_data.channel_name} chat history</h1>\n"
+        html3 += f"        <h1>{self.slack_data.channel_type.value}{self.slack_data.channel_name} chat history</h1>\n"
         html3 += self.print_messages(self.slack_data.messages)
         # Only print used emojis
         html2 = self.print_custom_emoji_definitions()
