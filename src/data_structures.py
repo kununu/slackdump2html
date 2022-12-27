@@ -33,3 +33,6 @@ class SlackData:
     channel_name: str
     messages: list[SlackMessage]
     emojis: dict[str, str]
+
+    def get_title_text(self) -> str:
+        return self.channel_type.value + self.channel_name
