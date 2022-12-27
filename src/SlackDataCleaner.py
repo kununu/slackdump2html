@@ -1,8 +1,11 @@
-from src.data_structures import SlackData
+from typing import Tuple
+
+from src.data_structures import SlackData, ChannelType
 
 
 class SlackDataCleaner:
     user_map: dict[str, str] = dict()
+    channel_map: dict[str, Tuple[ChannelType, str]] = dict()
     emoji_skin_tones = {
         2: "_light_skin_tone",
         3: "_medium-light_skin_tone",
@@ -33,6 +36,7 @@ class SlackDataCleaner:
         "mostly_sunny": "sun_behind_small_cloud",
         "muscle": "flexed_biceps",
         "octagonal_sign": "stop_sign",
+        "partly_sunny_rain": "sun_behind_rain_cloud",
         "rain_cloud": "cloud_with_rain",
         "rolled_up_newspaper": "rolled-up_newspaper",
         "santa": "Santa_Claus",
@@ -44,6 +48,9 @@ class SlackDataCleaner:
         "snow_cloud": "cloud_with_snow",
         "spock-hand": "vulcan_salute",
         "sun_small_cloud": "sun_behind_small_cloud",
+        # animals
+        "lion_face": "lion",
+        "zebra_face": "zebra",
         # flags
         "flag-at": "Australia",
         "flag-au": "Austria",
@@ -53,6 +60,7 @@ class SlackDataCleaner:
         "flag-cn": "China",
         "flag-co": "Colombia",
         "flag-de": "Germany",
+        "flag-gg": "Guernsey",
         "flag-ie": "Ireland",
         "flag-nl": "Netherlands",
         "flag-nr": "Nauru",
@@ -98,13 +106,15 @@ class SlackDataCleaner:
         "woman_with-bunny-ears-partying": "women_with_bunny_ears",
         "woman_gesturing-ok": "woman_gesturing_OK",
         "man_gesturing-ok": "man_gesturing_OK",
-        "older_man": "old_man",
-        "older_woman": "old_woman",
         "raising_hand": "man_raising_hand",
         "bicyclist": "person_biking",
         "man_in_business_suit_levitating": "person_in_suit_levitating",
-        "surfer": "person_surfing",
+        "older_man": "old_man",
+        "older_woman": "old_woman",
         "runner": "person_running",
+        "surfer": "person_surfing",
+        "two_men_holding_hands": "men_holding_hands",
+        "two_women_holding_hands": "women_holding_hands",
         "water_polo": "person_playing_water_polo",
         # hands
         "-1": "thumbs_down",
@@ -162,15 +172,24 @@ class SlackDataCleaner:
     }
 
     def __init__(self):
+        self._read_user_file()
+        self._read_channel_file()
+
+    def _read_user_file(self):
         user_file = open("data/users.txt", "r", encoding="utf-8")
         lines = user_file.readlines()
-        # Ignore the first 2 lines
-        lines.pop(0)
-        lines.pop(0)
-        for line in lines:
+        for line in lines[2:]:
             parts = line.split(" ")
             parts = [i for i in parts if i != ""]
             self.user_map[parts[1]] = self.to_pretty_user(parts[0])
+
+    def _read_channel_file(self):
+        user_file = open("data/channels.txt", "r", encoding="utf-8")
+        lines = user_file.readlines()
+        for line in lines[1:]:
+            line = line.replace("🔒 ", "🔒").strip()
+            parts = line.split(" ")
+            self.channel_map[parts[0]] = (ChannelType(parts[-1][0]), parts[-1][1:])
 
     def replace_names(self, slack_data: SlackData):
         for message in slack_data.messages:
@@ -194,6 +213,8 @@ class SlackDataCleaner:
             return user
 
     def replace_emoji_name(self, emoji_name: str):
+        if emoji_name == "hand" or emoji_name.startswith("hand::"):
+            emoji_name = "raised_hand" + emoji_name[5:]
         for skin_tone in self.emoji_skin_tones.items():
             emoji_name = emoji_name.replace(f"::skin-tone-{skin_tone[0]}", skin_tone[1])
         for emoji in self.emoji_name_start_slack_to_lib.items():
