@@ -47,11 +47,10 @@ class SlackDumpReader:
         return slack_data
 
     def get_channel_name(self, dump_data, file_name: str) -> Tuple[ChannelType, str]:
-        if dump_data["name"] == "":
-            if file_name in self.data_cleaner.channel_map:
-                return self.data_cleaner.channel_map[file_name]
-            else:
-                return ChannelType.Unknown, file_name
+        if file_name in self.data_cleaner.channel_map:
+            return self.data_cleaner.channel_map[file_name]
+        elif dump_data["name"] == "":
+            return ChannelType.Unknown, file_name
         else:
             return ChannelType.Channel, dump_data["name"]
 
