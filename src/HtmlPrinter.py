@@ -90,8 +90,7 @@ class HtmlPrinter:
             letter_sum += ord(letter)
         return letter_sum % 15
 
-    def format_message(self, text: str) -> str:
-        text = text.replace("\n", "<br>")
+    def format_message(self, text: str) -> str:        
         text = text.replace("<!here>", '<span class="user-mention">here</span>')
         text = text.replace("<!channel>", '<span class="user-mention">channel</span>')
         text = re.sub(r"<(http.*?)\|(.*?)>", self.create_html_url_with_alias, text)
@@ -103,6 +102,7 @@ class HtmlPrinter:
         text = re.sub(r":([\w+-]+?)::skin-tone-(\d):", self.replace_emoji_with_skin_tone, text)
         text = re.sub(r":([\w+-]+?):", self.replace_emoji, text)
         text = re.sub(r"```(.*)```", self.make_code, text, flags=re.DOTALL)
+        text = text.replace("\n", "<br>")
         text = emoji.emojize(text, language="alias")
         # TODO Emoji codes in links are translated to emojis which breaks these links
         return text

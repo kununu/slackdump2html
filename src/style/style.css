@@ -232,6 +232,7 @@ code {
     border-radius: 0.2em;
     display: block;
     padding: 0.5em;
+    white-space: pre-wrap;
 }
 
 i.emoji {
