@@ -205,8 +205,8 @@ class SlackDataCleaner:
 
     def to_pretty_user(self, user: str) -> str:
         if "." in user:
-            prettyUserName = user.replace(".", " ")
-            return prettyUserName.title()
+            pretty_user_name = user.replace(".", " ")
+            return pretty_user_name.title()
         else:
             return user
 
