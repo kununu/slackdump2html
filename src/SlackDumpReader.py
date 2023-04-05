@@ -2,16 +2,24 @@ import base64
 import json
 import os
 from datetime import datetime
+from pathlib import Path
+from typing import Tuple
 
-from src.data_structures import SlackData, SlackMessage, SlackThreadMessage
-
+from src.SlackDataCleaner import SlackDataCleaner
+from src.data_structures import SlackData, SlackMessage, SlackThreadMessage, ChannelType
 
 EMOJI_PATH = "data/emojis/emojis/"
 
 
 class SlackDumpReader:
+    data_cleaner: SlackDataCleaner
+
+    def __init__(self, data_cleaner: SlackDataCleaner):
+        self.data_cleaner = data_cleaner
+
     def read(self, file_path: str) -> SlackData:
         dump_file = open(file_path, encoding="utf-8")
+        file_name = Path(file_path).stem
         dump_data = json.load(dump_file)
 
         messages: list[SlackMessage] = list()
@@ -29,13 +37,23 @@ class SlackDumpReader:
                     )
                 )
 
+        channel_type, channel_name = self.get_channel_name(dump_data, file_name)
         slack_data = SlackData(
-            channel_name=dump_data["name"],
+            channel_type=channel_type,
+            channel_name=channel_name,
             messages=messages,
             emojis=self.read_emojis(),
         )
 
         return slack_data
+
+    def get_channel_name(self, dump_data, file_name: str) -> Tuple[ChannelType, str]:
+        if file_name in self.data_cleaner.channel_map:
+            return self.data_cleaner.channel_map[file_name]
+        elif dump_data["name"] == "":
+            return ChannelType.Unknown, file_name
+        else:
+            return ChannelType.Channel, dump_data["name"]
 
     def get_user(self, message: dict) -> str:
         if "user" in message:

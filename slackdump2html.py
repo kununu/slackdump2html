@@ -16,13 +16,13 @@ def get_input_file_path() -> str:
 
 if __name__ == '__main__':
     input_file = get_input_file_path()
+    data_cleaner = SlackDataCleaner()
 
     print("Reading slack dump...", flush=True)
-    reader = SlackDumpReader()
+    reader = SlackDumpReader(data_cleaner)
     slack_data = reader.read(input_file)
 
     print("Cleaning data...", flush=True)
-    data_cleaner = SlackDataCleaner()
     data_cleaner.replace_names(slack_data)
 
     print("Printing output file...", flush=True)
