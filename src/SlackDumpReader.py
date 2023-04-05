@@ -2,6 +2,7 @@ import base64
 import json
 import os
 from datetime import datetime
+from pathlib import Path
 from typing import Tuple
 
 from src.SlackDataCleaner import SlackDataCleaner
@@ -18,7 +19,7 @@ class SlackDumpReader:
 
     def read(self, file_path: str) -> SlackData:
         dump_file = open(file_path, encoding="utf-8")
-        file_name = os.path.basename(file_path).split("/")[-1][:-5]
+        file_name = Path(file_path).stem
         dump_data = json.load(dump_file)
 
         messages: list[SlackMessage] = list()

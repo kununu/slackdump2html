@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 
 
 @dataclass
@@ -20,7 +20,7 @@ class SlackMessage:
     replies: list[SlackThreadMessage]
 
 
-class ChannelType(Enum):
+class ChannelType(StrEnum):
     Channel = "#"
     Conversation = "@"
     Private = "🔒"
