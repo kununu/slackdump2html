@@ -3,7 +3,14 @@
 /data
 /out
 /venv
+/.env
 /.idea
 /.gitignore.bak
+/.vscode
+/app.slack.com_cookies.txt
+/slackdump
+/slackdump_Linux_x86_64.tar.gz
 /secrets.txt
 /testdata/
+/C03HQM5DE*
+/C2R198BRC*

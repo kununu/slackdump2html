@@ -70,17 +70,17 @@ Use the data/channels.txt file to get the ID of your channel (e.g. C03HQM5DE) an
 Grab a coffee, this might take a while.
 
 ```bash
-./slackdump <your-channel-id>
+./slackdump -download -base data/messages <your-channel-id>
 Example:
-./slackdump C03HQM5DE
+./slackdump -download -base data/messages C03HQM5DE
 ```
 
-Convert your `slackdump` to a HTML file with this command.
+Convert your `slackdump` to an HTML file with this command.
 
 ```bash
 python slackdump2html.py <path-to-your-export-file>
 Example:
-python slackdump2html.py C03HQM5DE.json
+python slackdump2html.py data/messages/C03HQM5DE.json
 ```
 
 You'll find your output file in out/<channel-name>.html.
@@ -97,4 +97,7 @@ You'll find your output file in out/<channel-name>.html.
 
 * Code blocks:
   * Some formatting in code blocks is broken.
-  
+
+* EZ-Login 3000 might not work in Linux:
+  * Define a `.env` file with a `SLACK_TOKEN=xoxc-...` and `COOKIE=./app.slack.com_cookies.txt` variable.
+  * Or pass the via command line arguments `-t xoxc-... -cookie ./app.slack.com_cookies.txt`
