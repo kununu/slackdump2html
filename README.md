@@ -45,6 +45,7 @@ You'll also need an emoji dump
 ### Python
 
 To run this script, you need to have Python installed. If you don't have it, please [download](https://www.python.org/downloads/) the latest version.
+
 There are libraries needed. See the Pipfile for what's needed.
 
 ```bash
@@ -55,18 +56,18 @@ pipenv install
 
 ### Automatically
 
-Fetch the ID of the channel (e.g. C03HQM5DE) you want to export from the data/channels.txt file and run
+Fetch the ID of the channel (e.g. `C03HQM5DE`) you want to export from the `data/channels.txt` file and run
 
 ```bash
 ./dump-and-convert.sh
 ```
 
-Provide the channel ID when it asks for it. You'll find your output file in out/<channel-name>.html.
+Provide the channel ID when it asks for it. You'll find your output file in `out/<channel-name>.html`.
 
 ### Manually
 
 You'll need to dump the channel you want to convert via `slackdump`.
-Use the data/channels.txt file to get the ID of your channel (e.g. C03HQM5DE) and use `slackdump` to dump the channel to a JSON file.
+Use the `data/channels.txt` file to get the ID of your channel (e.g. `C03HQM5DE`) and use `slackdump` to dump the channel to a JSON file.
 Grab a coffee, this might take a while.
 
 ```bash
@@ -78,12 +79,12 @@ Example:
 Convert your `slackdump` to an HTML file with this command.
 
 ```bash
-python slackdump2html.py <path-to-your-export-file>
+python slackdump2html.py <path-to-your-export-file> <path-to-your-image-files> 
 Example:
-python slackdump2html.py data/messages/C03HQM5DE.json
+python slackdump2html.py data/messages/C03HQM5DE.json  data/messages/C03HQM5DE
 ```
 
-You'll find your output file in out/<channel-name>.html.
+You'll find your output file in `out/<channel-name>.html`.
 
 ## Known issues
 
