@@ -25,7 +25,11 @@ class SlackDumpReader:
         messages: list[SlackMessage] = list()
 
         for message in dump_data["messages"]:
-            if message["type"] == "message" and "subtype" not in message and "text" in message:
+            if (
+                message["type"] == "message"
+                and "subtype" not in message
+                and "text" in message
+            ):
                 replies = self.read_replies(message)
                 messages.append(
                     SlackMessage(
@@ -78,7 +82,11 @@ class SlackDumpReader:
         replies: list[SlackThreadMessage] = list()
         if "slackdump_thread_replies" in message:
             for reply in message["slackdump_thread_replies"]:
-                if reply["type"] == "message" and "subtype" not in reply and "text" in reply:
+                if (
+                    reply["type"] == "message"
+                    and "subtype" not in reply
+                    and "text" in reply
+                ):
                     replies.append(
                         SlackThreadMessage(
                             user=reply["user"],
@@ -106,7 +114,9 @@ class SlackDumpReader:
                 with open(self.get_emoji_file_name(emoji[0]), "rb") as image:
                     image_data = image.read()
                     image_type = self.get_image_type(image_data)
-                    base64_data = base64.encodebytes(image_data).decode("utf-8").replace("\n", "")
+                    base64_data = (
+                        base64.encodebytes(image_data).decode("utf-8").replace("\n", "")
+                    )
                     emojis[emoji[0]] = image_type + ";base64," + base64_data
 
         for emoji in emoji_data.items():

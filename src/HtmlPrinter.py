@@ -20,7 +20,9 @@ class HtmlPrinter:
     def print(self):
         html1 = "<!DOCTYPE html>\n"
         html1 += "    <head>\n"
-        html1 += f"        <title>{self.slack_data.get_title_text()} chat history</title>\n"
+        html1 += (
+            f"        <title>{self.slack_data.get_title_text()} chat history</title>\n"
+        )
         html1 += '        <meta charset="UTF-8">'
         html1 += self.read_css_file()
         html3 = "    </head>\n"
@@ -68,9 +70,13 @@ class HtmlPrinter:
         html += self.print_user_image(message.user)
         html += '            <p class="meta">\n'
         html += f'                <span class="author">{message.user}</span>\n'
-        html += f'                <span class="date">{self.to_time(message.date)}</span>\n'
+        html += (
+            f'                <span class="date">{self.to_time(message.date)}</span>\n'
+        )
         html += "            </p>\n"
-        html += f'            <p class="message">{self.format_message(message.text)}</p>\n'
+        html += (
+            f'            <p class="message">{self.format_message(message.text)}</p>\n'
+        )
         html += self.print_reactions(message.reactions)
         html += self.print_replies(message)
         html += "        </div>\n"
@@ -90,7 +96,7 @@ class HtmlPrinter:
             letter_sum += ord(letter)
         return letter_sum % 15
 
-    def format_message(self, text: str) -> str:        
+    def format_message(self, text: str) -> str:
         text = text.replace("<!here>", '<span class="user-mention">here</span>')
         text = text.replace("<!channel>", '<span class="user-mention">channel</span>')
         text = re.sub(r"<(http.*?)\|(.*?)>", self.create_html_url_with_alias, text)
@@ -99,7 +105,9 @@ class HtmlPrinter:
         text = re.sub(r"<@(.*?)>", self.create_at_tag, text)
         text = re.sub(r"<#.*\|(.*?)>", self.create_channel_tag_with_alias, text)
         text = re.sub(r"\*([^\"\n]+?)\*", self.make_bold, text)
-        text = re.sub(r":([\w+-]+?)::skin-tone-(\d):", self.replace_emoji_with_skin_tone, text)
+        text = re.sub(
+            r":([\w+-]+?)::skin-tone-(\d):", self.replace_emoji_with_skin_tone, text
+        )
         text = re.sub(r":([\w+-]+?):", self.replace_emoji, text)
         text = re.sub(r"```(.*)```", self.make_code, text, flags=re.DOTALL)
         text = text.replace("\n", "<br>")
@@ -150,7 +158,9 @@ class HtmlPrinter:
         emoji_name = match_obj.group(1)
         skin_tone = match_obj.group(2)
         if emoji_name is not None and skin_tone is not None:
-            cleaned_emoji_name = self.data_cleaner.replace_emoji_name_with_skin_tone(emoji_name, int(skin_tone))
+            cleaned_emoji_name = self.data_cleaner.replace_emoji_name_with_skin_tone(
+                emoji_name, int(skin_tone)
+            )
             return self.get_custom_emoji_html(cleaned_emoji_name)
 
     def print_reactions(self, reactions: dict[str, int]) -> str:
@@ -170,7 +180,10 @@ class HtmlPrinter:
             self.used_custom_emojis.add(emoji_name)
             return f'<i class="emoji emoji-{emoji_name}"></i>'
         else:
-            return emoji.emojize(f":{self.data_cleaner.replace_emoji_name(emoji_name)}:", language="alias")
+            return emoji.emojize(
+                f":{self.data_cleaner.replace_emoji_name(emoji_name)}:",
+                language="alias",
+            )
 
     def print_replies(self, message: SlackMessage) -> str:
         html = ""
@@ -189,7 +202,9 @@ class HtmlPrinter:
         html += f'		                <span class="author">{reply.user}</span>\n'
         html += f'		                <span class="date">{self.to_datetime(reply.date)}</span>\n'
         html += "		            </p>\n"
-        html += f'		            <p class="message">{self.format_message(reply.text)}</p>\n'
+        html += (
+            f'		            <p class="message">{self.format_message(reply.text)}</p>\n'
+        )
         html += self.print_reactions(reply.reactions)
         html += "		        </div>\n"
         return html
