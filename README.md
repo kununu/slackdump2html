@@ -79,9 +79,9 @@ Example:
 Convert your `slackdump` to an HTML file with this command.
 
 ```bash
-python slackdump2html.py <path-to-your-export-file> <path-to-your-image-files> 
+python slackdump2html.py <path-to-your-export-files> <your-channel-id>
 Example:
-python slackdump2html.py data/messages/C03HQM5DE.json  data/messages/C03HQM5DE
+python slackdump2html.py data/messages C03HQM5DE
 ```
 
 You'll find your output file in `out/<channel-name>.html`.

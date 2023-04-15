@@ -10,14 +10,14 @@ from src.SlackDumpReader import SlackData, SlackMessage, SlackThreadMessage
 
 class HtmlPrinter:
     slack_data: SlackData
-    image_folder: str
+    channel_id: str
     standard_emojis: dict[str, str] = dict()
     used_custom_emojis: set[str] = set()
     data_cleaner = SlackDataCleaner()
 
-    def __init__(self, slack_data: SlackData, image_folder: str):
+    def __init__(self, slack_data: SlackData, channel_id: str):
         self.slack_data = slack_data
-        self.image_folder = image_folder
+        self.channel_id = channel_id
 
     def print(self):
         html1 = "<!DOCTYPE html>\n"

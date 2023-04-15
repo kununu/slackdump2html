@@ -6,17 +6,21 @@ from src.HtmlPrinter import HtmlPrinter
 from src.SlackDataCleaner import SlackDataCleaner
 from src.SlackDumpReader import SlackDumpReader
 
-def get_input_paths() -> List[str]:
-    if len(sys.argv) != 3:
-        raise ValueError('Please provide an input file and image folder argument.')
-    if not os.path.exists(sys.argv[1]) or not os.path.exists(sys.argv[2]):
-        raise ValueError('Please provide an existing input file and image folder.')
-    return [sys.argv[1],sys.argv[2]]
 
-if __name__ == '__main__':
-    input_paths = get_input_paths()
-    input_file = input_paths[0]
-    image_folder = input_paths[1]
+def get_export_path_and_channel_id() -> List[str]:
+    if len(sys.argv) != 3:
+        raise ValueError("Please provide an export folder and a channel ID.")
+    if not os.path.exists(sys.argv[1]):
+        raise ValueError("Please provide an existing export folder.")
+    return [sys.argv[1], sys.argv[2]]
+
+
+if __name__ == "__main__":
+    path_and_channel = get_export_path_and_channel_id()
+    export_path = path_and_channel[0]
+    channel_id = path_and_channel[1]
+
+    input_file = export_path + "/" + channel_id + ".json"
 
     data_cleaner = SlackDataCleaner()
 
@@ -28,5 +32,5 @@ if __name__ == '__main__':
     data_cleaner.replace_names(slack_data)
 
     print("Printing output file...", flush=True)
-    html_printer = HtmlPrinter(slack_data, image_folder)
+    html_printer = HtmlPrinter(slack_data, channel_id)
     html_printer.print()
