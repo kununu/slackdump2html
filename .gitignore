@@ -3,7 +3,10 @@
 /data
 /out
 /venv
+/.env
 /.idea
 /.gitignore.bak
+/.vscode
 /secrets.txt
+/slackdump
 /testdata/
